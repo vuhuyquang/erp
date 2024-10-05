@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Brian2694\Toastr\Facades\Toastr;
 
 class PermissionController extends Controller
 {
@@ -43,8 +44,10 @@ class PermissionController extends Controller
       Gate::authorize('permission.create');
       $response = $this->permissionService->store($request);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('permission');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->back();
       }
     }
@@ -65,8 +68,10 @@ class PermissionController extends Controller
       Gate::authorize('permission.update');
       $response = $this->permissionService->update($request, $id);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('permission');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->route('permission.edit', ['id' => $id]);
       }
     }
@@ -76,8 +81,10 @@ class PermissionController extends Controller
       Gate::authorize('permission.delete');
       $response = $this->permissionService->delete($id);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('permission');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->route('permission');
       }
     }

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Brian2694\Toastr\Facades\Toastr;
 
 class UserController extends Controller
 {
@@ -48,8 +49,10 @@ class UserController extends Controller
     Gate::authorize('user.create');
     $response = $this->userService->store($request);
     if ($response['success']) {
+      Toastr::success($response['message'], 'Thành công');
       return redirect()->route('user');
     } else {
+      Toastr::error($response['message'], 'Thất bại');
       return redirect()->back();
     }
   }
@@ -70,8 +73,10 @@ class UserController extends Controller
     Gate::authorize('user.update');
     $response = $this->userService->update($request, $id);
     if ($response['success']) {
+      Toastr::success($response['message'], 'Thành công');
       return redirect()->route('user');
     } else {
+      Toastr::error($response['message'], 'Thất bại');
       return redirect()->route('user.edit', ['id' => $id]);
     }
   }
@@ -81,8 +86,10 @@ class UserController extends Controller
     Gate::authorize('user.delete');
     $response = $this->userService->delete($id);
     if ($response['success']) {
+      Toastr::success($response['message'], 'Thành công');
       return redirect()->route('user');
     } else {
+      Toastr::error($response['message'], 'Thất bại');
       return redirect()->route('user');
     }
   }
@@ -117,8 +124,10 @@ class UserController extends Controller
   {
     $response = $this->userService->postProfile($request);
     if ($response['success']) {
+      Toastr::success($response['message'], 'Thành công');
       return redirect()->route('get.profile');
     } else {
+      Toastr::error($response['message'], 'Thất bại');
       return redirect()->back();
     }
   }
@@ -127,9 +136,11 @@ class UserController extends Controller
   {
     $response = $this->userService->changePassword($request);
     if ($response['success']) {
-        return redirect()->route('get.profile');
+      Toastr::success($response['message'], 'Thành công');
+      return redirect()->route('get.profile');
     } else {
-        return redirect()->back();
+      Toastr::error($response['message'], 'Thất bại');
+      return redirect()->back();
     }
   }
 
@@ -142,6 +153,7 @@ class UserController extends Controller
   {
     $response = $this->userService->resetPassword($request);
     if ($response['success']) {
+      Toastr::success($response['message'], 'Thành công');
       return redirect()->route('getLogin');
     } else {
       return redirect()->back();

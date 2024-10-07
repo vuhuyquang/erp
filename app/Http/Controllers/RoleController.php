@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Brian2694\Toastr\Facades\Toastr;
 
 class RoleController extends Controller
 {
@@ -44,8 +45,10 @@ class RoleController extends Controller
       Gate::authorize('role.create');
       $response = $this->roleService->store($request);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('role');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->back();
       }
     }
@@ -66,8 +69,10 @@ class RoleController extends Controller
       Gate::authorize('role.update');
       $response = $this->roleService->update($request, $id);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('role');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->route('role.edit', ['id' => $id]);
       }
     }
@@ -77,8 +82,10 @@ class RoleController extends Controller
       Gate::authorize('role.delete');
       $response = $this->roleService->delete($id);
       if ($response['success']) {
+        Toastr::success($response['message'], 'Thành công');
         return redirect()->route('role');
       } else {
+        Toastr::error($response['message'], 'Thất bại');
         return redirect()->route('role');
       }
     }

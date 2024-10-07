@@ -16,7 +16,7 @@ class Post extends Model
         'short_content',
         'image_url',
         'user_id',
-        'post_category_id',
+        'category_id',
         'reading_time',
         'content'
     ];

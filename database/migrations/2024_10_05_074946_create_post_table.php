@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('short_content');
             $table->string('image_url');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('post_category_id');
+            $table->unsignedInteger('category_id');
             $table->unsignedTinyInteger('reading_time')->default(1);
+            $table->text('content');
             $table->timestamps();
         });
     }
